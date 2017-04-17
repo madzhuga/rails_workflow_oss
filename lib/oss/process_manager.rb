@@ -19,9 +19,8 @@ module OSS
       OSS.config
     end
 
-    # TODO: use config to get Builder
     def builder
-      Builder.new(self)
+      config.builder(self)
     end
   end
 end
