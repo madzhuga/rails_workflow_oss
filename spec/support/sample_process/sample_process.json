@@ -2,7 +2,14 @@
   "identifier": "some_dummy_identifier",
   "operations":
     [
-      {"identifier": "operation_one"},
-      {"identifier": "operation_two"}
+      {
+        "identifier": "operation_one"
+      },
+      {
+        "identifier": "operation_two",
+        "dependencies": [
+          {"operation_one": ["completed", "failed", "cancelled"]}
+        ]
+      }
     ]
 }

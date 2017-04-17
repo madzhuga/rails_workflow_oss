@@ -39,7 +39,7 @@ module OSS
       end
 
       def build_operation(process, operation_data)
-        operation = OperationTemplate.new(operation_data['identifier'])
+        operation = OperationTemplate.new(process, operation_data)
         process.operations << operation
       end
 

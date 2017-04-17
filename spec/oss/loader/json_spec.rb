@@ -27,5 +27,17 @@ RSpec.describe OSS::Loader::Json do
       expect(template.operations.map(&:identifier))
         .to match %w[operation_one operation_two]
     end
+
+    it 'has independent operation template' do
+      expect(
+        template.operations.find(&:independent?).identifier
+      ).to eq 'operation_one'
+    end
+
+    it 'has dependent operation template' do
+      expect(
+        template.operations.reject(&:independent?).first.identifier
+      ).to eq 'operation_two'
+    end
   end
 end
