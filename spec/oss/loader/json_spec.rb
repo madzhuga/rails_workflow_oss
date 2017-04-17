@@ -11,13 +11,21 @@ RSpec.describe OSS::Loader::Json do
       config.processes_path = './spec/support/sample_process'
     end
   end
+
   it 'loads file' do
     expect(OSS.config.cache.process_templates.count).to eq 1
   end
 
-  it 'creates proper template' do
-    expect(
-      OSS.config.process_template('some_dummy_identifier')
-    ).to be_a OSS::ProcessTemplate
+  context 'loaded template' do
+    let(:template) { OSS.config.process_template('some_dummy_identifier') }
+
+    it 'has valid class' do
+      expect(template).to be_a OSS::ProcessTemplate
+    end
+
+    it 'has operation templates' do
+      expect(template.operations.map(&:identifier))
+        .to match %w[operation_one operation_two]
+    end
   end
 end

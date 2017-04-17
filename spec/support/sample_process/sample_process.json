@@ -1,3 +1,8 @@
 {
-  "identifier": "some_dummy_identifier"
+  "identifier": "some_dummy_identifier",
+  "operations":
+    [
+      {"identifier": "operation_one"},
+      {"identifier": "operation_two"}
+    ]
 }

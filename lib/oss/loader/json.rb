@@ -15,21 +15,32 @@ module OSS
     # end
     class Json
       def load
-        @templates = {}
+        templates = {}
 
         Dir[OSS.config.processes_path + '/**/*.json'].each do |file|
           template = build_template(file)
-          @templates[template.identifier] = template
+          templates[template.identifier] = template
         end
 
-        @templates
+        templates
       end
 
       private
 
       def build_template(file)
         data = parse_file(file)
-        ProcessTemplate.new(data['identifier'])
+        process = ProcessTemplate.new(data['identifier'])
+
+        data['operations'].each do |operation_data|
+          build_operation(process, operation_data)
+        end
+
+        process
+      end
+
+      def build_operation(process, operation_data)
+        operation = OperationTemplate.new(operation_data['identifier'])
+        process.operations << operation
       end
 
       def parse_file(file)

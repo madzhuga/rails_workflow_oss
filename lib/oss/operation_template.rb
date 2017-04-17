@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module OSS
-  # ProcessTemplate used as a template to build new process
-  class ProcessTemplate
+  # OperationTemplate used to build operation
+  class OperationTemplate
     attr_reader :identifier
-    attr_accessor :operations
 
     def initialize(identifier)
       @identifier = identifier
-      @operations = []
     end
   end
 end
