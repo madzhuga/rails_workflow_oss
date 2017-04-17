@@ -10,7 +10,6 @@ module OSS
     end
 
     def build(identifier, context)
-      # TODO: Use loader / cache to get process template
       template = process_template(identifier)
       Process.new template.identifier, context
     end
@@ -18,7 +17,7 @@ module OSS
     private
 
     def process_template(identifier)
-      ProcessTemplate.new(identifier)
+      OSS.config.process_template(identifier)
     end
   end
 end

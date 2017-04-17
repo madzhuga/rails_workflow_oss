@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe OSS::ProcessManager do
-  subject(:process_manager) { OSS::ProcessManager.new(config) }
-  let(:config) { OSS::Config.new }
+  subject(:process_manager) { OSS::ProcessManager.new }
   let(:context) { OSS::Context.new }
   let(:identifier) { 'some_uniq_identifier' }
-
-  context '#config' do
-    specify { expect(subject.config).to eq config }
-  end
 
   context '#build' do
     let(:result) { subject.build(identifier, context) }
