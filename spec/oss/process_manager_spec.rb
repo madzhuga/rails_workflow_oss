@@ -18,7 +18,7 @@ RSpec.describe OSS::ProcessManager do
   end
 
   context '#start' do
-    let(:process) { OSS::Process.new(context) }
+    let(:process) { OSS::Process.new('dumy_identifier', context) }
 
     before do
       allow(process_manager).to receive(:build).and_return(process)
