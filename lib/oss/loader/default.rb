@@ -13,7 +13,7 @@ module OSS
     # end
     class Default
       def load
-        # raise 'Please specify Loader in OSS Configuration'
+        raise 'Please specify Loader in OSS Configuration'
       end
     end
   end
