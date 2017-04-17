@@ -11,7 +11,7 @@ module OSS
 
     def build(identifier, context)
       template = process_template(identifier)
-      # TODO build process using templates - create independent operations etc.
+      # TODO: build process using templates - create independent operations etc.
       Process.new template.identifier, context
     end
 

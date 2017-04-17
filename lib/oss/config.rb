@@ -8,7 +8,7 @@ module OSS
   class Config
     include Singleton
 
-    attr_writer :builder_class
+    attr_writer :builder_class, :loader_class
 
     # TODO: set up process templates cache, loading etc.
     def process_template(identifier)
@@ -21,6 +21,14 @@ module OSS
 
     def builder_class
       @builder_class ||= Builder
+    end
+
+    def loader
+      @loader ||= loader_class.new
+    end
+
+    def loader_class
+      @loader_class ||= OSS::Loader::Default
     end
 
     def cache

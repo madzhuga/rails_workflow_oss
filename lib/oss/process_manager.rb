@@ -5,6 +5,8 @@ module OSS
   # It is initialized with configuration.
   class ProcessManager
     def build(identifier, context)
+      # TODO: context can be both Hash or OSS::Context -
+      # build new Context from Hash
       builder.build(identifier, context)
     end
 

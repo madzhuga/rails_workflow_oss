@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe OSS::ProcessManager do
-  subject(:process_manager) { OSS::ProcessManager.new }
+  subject(:process_manager) { described_class.new }
+
   let(:context) { OSS::Context.new }
   let(:identifier) { 'some_uniq_identifier' }
 
@@ -12,7 +13,8 @@ RSpec.describe OSS::ProcessManager do
   end
 
   context '#build' do
-    let(:result) { subject.build(identifier, context) }
+    let(:result) { process_manager.build(identifier, context) }
+
     it 'builds new process' do
       expect(result).to be_a OSS::Process
     end
@@ -22,12 +24,13 @@ RSpec.describe OSS::ProcessManager do
     let(:process) { OSS::Process.new('dumy_identifier', context) }
 
     before do
-      allow(process_manager).to receive(:build).and_return(process)
+      allow(OSS::Process).to receive(:new).and_return(process)
+      allow(process).to receive(:start)
     end
 
     it 'starts new process' do
-      expect(process).to receive(:start)
-      subject.start(identifier, context)
+      process_manager.start(identifier, context)
+      expect(process).to have_received(:start)
     end
   end
 end

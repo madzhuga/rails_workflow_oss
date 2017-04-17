@@ -6,7 +6,9 @@ module OSS
   class Cache
     def process_templates
       # TODO: load processes
-      @process_templates ||= {}
+      @process_templates ||= begin
+        OSS.config.loader.load
+      end
     end
 
     def process_template(identifier)

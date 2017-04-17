@@ -1,2 +1,12 @@
+require:
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 2.3
+
+  # RSpec:
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb'
