@@ -5,6 +5,12 @@ RSpec.describe OSS::ProcessManager do
   let(:context) { OSS::Context.new }
   let(:identifier) { 'some_uniq_identifier' }
 
+  before do
+    allow(OSS.config.cache)
+      .to receive(:process_template)
+      .and_return(OSS::ProcessTemplate.new(identifier))
+  end
+
   context '#build' do
     let(:result) { subject.build(identifier, context) }
     it 'builds new process' do

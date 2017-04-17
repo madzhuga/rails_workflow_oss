@@ -10,7 +10,11 @@ module OSS
 
     # TODO: set up process templates cache, loading etc.
     def process_template(identifier)
-      ProcessTemplate.new(identifier)
+      cache.process_template(identifier)
+    end
+
+    def cache
+      @cache ||= Cache.new
     end
   end
 end
