@@ -3,44 +3,28 @@
 require 'singleton'
 
 module OSS
-  # Configuration is used to contain important settings,
-  # perform loading and caching templates etc.
+  # Config is a singleton decorator for a configuration
   class Config
     include Singleton
 
-    attr_writer :builder_class, :loader_class, :processes_path
-
-    # TODO: set up process templates cache, loading etc.
-    def process_template(identifier)
-      cache.process_template(identifier)
+    def reset
+      @config = Configuration.new
     end
 
-    def builder(*args)
-      builder_class.new(*args)
+    private
+
+    def initialize
+      reset
     end
 
-    def builder_class
-      @builder_class ||= Builder
+    attr_reader :config
+
+    def method_missing(name, *args, &block)
+      config.respond_to?(name) ? config.send(name, *args, &block) : super
     end
 
-    def load_templates
-      loader.load
-    end
-
-    def loader
-      @loader ||= loader_class.new
-    end
-
-    def loader_class
-      @loader_class ||= OSS::Loader::Default
-    end
-
-    def processes_path
-      @processes_path ||= Dir.pwd + '/processes'
-    end
-
-    def cache
-      @cache ||= Cache.new
+    def respond_to_missing?(method_name, include_private = false)
+      config.respond_to?(method_name) || super
     end
   end
 end

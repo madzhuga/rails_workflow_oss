@@ -8,6 +8,8 @@ RSpec.describe OSS::Cache do
     let(:template) { OSS::ProcessTemplate.new(identifier) }
 
     before do
+      OSS.config.reset
+
       allow(OSS.config.loader)
         .to receive(:load)
         .and_return(Hash[identifier, template])
