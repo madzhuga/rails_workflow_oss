@@ -23,6 +23,10 @@ module OSS
       @builder_class ||= Builder
     end
 
+    def load_templates
+      loader.load
+    end
+
     def loader
       @loader ||= loader_class.new
     end
