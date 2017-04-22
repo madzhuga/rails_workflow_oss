@@ -10,5 +10,9 @@ module OSS
       @identifier = identifier
       @operations = []
     end
+
+    def independent_operations
+      @operations.select(&:independent?)
+    end
   end
 end

@@ -14,10 +14,10 @@ module OSS
     #   ...
     # end
     class Json
-      def load
+      def load(dir = OSS.config.processes_path)
         templates = {}
 
-        Dir[OSS.config.processes_path + '/**/*.json'].each do |file|
+        Dir[dir + '/**/*.json'].each do |file|
           template = build_template(file)
           templates[template.identifier] = template
         end
