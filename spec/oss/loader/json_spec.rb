@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe OSS::Loader::Json do
-  let(:config) { Class.new(OSS::Config).instance }
-
   before do
-    allow(OSS).to receive(:config).and_return(config)
+    OSS.config.reset
 
     OSS.setup do |config|
       config.loader_class = described_class
