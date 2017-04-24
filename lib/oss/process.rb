@@ -12,6 +12,21 @@ module OSS
       @operations = []
     end
 
-    def start; end
+    def start
+      # TODO: check that status is 'NOT_STARTED' else raise error
+      @status = 'IN_PROGRESS'
+    end
+
+    def ready_operations
+      @operations.select(&:ready?)
+    end
+
+    def completed_operations
+      @operations.select(&:complete?)
+    end
+
+    def complete
+      @status = 'COMPLETED'
+    end
   end
 end

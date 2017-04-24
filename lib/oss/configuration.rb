@@ -6,7 +6,7 @@ module OSS
   # Configuration is used to contain important settings,
   # perform loading and caching templates etc.
   class Configuration
-    attr_writer :builder_class, :loader_class, :processes_path
+    attr_writer :builder_class, :loader_class, :processes_path, :runner_class
 
     # TODO: set up process templates cache, loading etc.
     def process_template(identifier)
@@ -15,6 +15,14 @@ module OSS
 
     def builder(*args)
       builder_class.new(*args)
+    end
+
+    def runner
+      @runner ||= runner_class.new
+    end
+
+    def runner_class
+      @runner_class ||= Runner
     end
 
     def builder_class

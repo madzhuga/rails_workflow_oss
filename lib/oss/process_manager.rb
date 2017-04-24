@@ -12,13 +12,17 @@ module OSS
 
     def start(*args)
       process = build(*args)
-      process.start
+      runner.start(process)
     end
 
     private
 
     def config
       OSS.config
+    end
+
+    def runner
+      OSS.config.runner
     end
 
     def builder

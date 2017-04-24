@@ -13,6 +13,20 @@ module OSS
       @process.operations.push(self)
     end
 
-    def start; end
+    def start
+      @status = 'IN_PROGRESS'
+    end
+
+    def ready?
+      @status == 'NOT_STARTED'
+    end
+
+    def complete?
+      @status == 'COMPLETE'
+    end
+
+    def complete
+      @status = 'COMPLETE'
+    end
   end
 end
