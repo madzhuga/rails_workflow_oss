@@ -28,12 +28,16 @@ module OSS
     def build_independent_operations(process)
       process_template(process.template_identifier)
         .independent_operations.each do |operation_template|
-          Operation.new(process, operation_template)
+          operation_builder.build(process, operation_template)
         end
     end
 
     def process_template(identifier)
       OSS.config.process_template(identifier)
+    end
+
+    def operation_builder
+      @operation_builder ||= OperationBuilder.new
     end
   end
 end

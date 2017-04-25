@@ -10,7 +10,7 @@ RSpec.describe OSS::Runner do
     end
   end
 
-  subject(:runner) { described_class.new }
+  subject(:runner) { described_class.new(process) }
 
   let(:identifier) { 'some_dummy_identifier' }
   let(:context) { OSS::Context.new }
@@ -18,19 +18,19 @@ RSpec.describe OSS::Runner do
 
   context 'run process' do
     specify do
-      expect { runner.start(process) }.to change { process.status }
+      # TODO: replace statuses with downcase
+      expect { runner.start }.to change { process.status }
         .from('NOT_STARTED').to('COMPLETED')
-        # .from('NOT_STARTED').to('IN_PROGRESS')
     end
 
     specify do
-      expect { runner.start(process) }
+      expect { runner.start }
         .to change { process.ready_operations.count }.from(1).to(0)
     end
 
     specify do
-      expect { runner.start(process) }
-        .to change { process.completed_operations.count }.from(0).to(1)
+      expect { runner.start }
+        .to change { process.completed_operations.count }.from(0).to(2)
     end
     # specify { expect(process.status).to eq 'NOT_STARTED' }
     # specify { expect(process.operations.count).to eq 1 }

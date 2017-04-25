@@ -28,5 +28,9 @@ module OSS
     def complete
       @status = 'COMPLETED'
     end
+
+    def template
+      OSS.config.process_template(@template_identifier)
+    end
   end
 end

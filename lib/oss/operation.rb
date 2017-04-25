@@ -8,25 +8,25 @@ module OSS
     def initialize(process, operation_template)
       @process = process
       @template = operation_template
-      @status = 'NOT_STARTED'
+      @status = 'not_started'
 
       @process.operations.push(self)
     end
 
     def start
-      @status = 'IN_PROGRESS'
+      @status = 'not_started'
     end
 
     def ready?
-      @status == 'NOT_STARTED'
+      @status == 'not_started'
     end
 
     def complete?
-      @status == 'COMPLETE'
+      @status == 'completed'
     end
 
     def complete
-      @status = 'COMPLETE'
+      @status = 'completed'
     end
   end
 end

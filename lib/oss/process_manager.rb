@@ -4,15 +4,17 @@ module OSS
   # Process Manager is a major endpoint to build new processes.
   # It is initialized with configuration.
   class ProcessManager
+    attr_reader :process
+
     def build(identifier, context)
       # TODO: context can be both Hash or OSS::Context -
       # build new Context from Hash
-      builder.build(identifier, context)
+      @process = builder.build(identifier, context)
     end
 
     def start(*args)
-      process = build(*args)
-      runner.start(process)
+      build(*args)
+      runner.start
     end
 
     private
@@ -22,7 +24,7 @@ module OSS
     end
 
     def runner
-      OSS.config.runner
+      OSS.config.runner(process)
     end
 
     def builder

@@ -14,5 +14,9 @@ module OSS
     def independent_operations
       @operations.select(&:independent?)
     end
+
+    def operation_by_identifier(identifier)
+      @operations.find { |o| o.identifier == identifier }
+    end
   end
 end

@@ -17,8 +17,8 @@ module OSS
       builder_class.new(*args)
     end
 
-    def runner
-      @runner ||= runner_class.new
+    def runner(process)
+      @runner ||= runner_class.new(process)
     end
 
     def runner_class
@@ -27,6 +27,14 @@ module OSS
 
     def builder_class
       @builder_class ||= Builder
+    end
+
+    def operation_builder
+      operation_builder_class.new
+    end
+
+    def operation_builder_class
+      @operation_builder_class ||= OperationBuilder
     end
 
     def load_templates

@@ -18,6 +18,6 @@ RSpec.describe OSS::Builder do
 
     specify { expect(process.status).to eq 'NOT_STARTED' }
     specify { expect(process.operations.count).to eq 1 }
-    specify { expect(process.operations.first.status).to eq 'NOT_STARTED' }
+    specify { expect(process.operations.first.status).to eq 'not_started' }
   end
 end
