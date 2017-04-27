@@ -49,6 +49,10 @@ module OSS
       @loader_class ||= OSS::Loader::Default
     end
 
+    def operation_template_builder
+      @operation_template_builder ||= OSS::OperationTemplateBuilder.new
+    end
+
     def processes_path
       @processes_path ||= Dir.pwd + '/processes'
     end

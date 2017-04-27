@@ -39,8 +39,12 @@ module OSS
       end
 
       def build_operation(process, operation_data)
-        operation = OperationTemplate.new(process, operation_data)
+        operation = operation_template_builder.build(process, operation_data)
         process.operations << operation
+      end
+
+      def operation_template_builder
+        OSS.config.operation_template_builder
       end
 
       def parse_file(file)
