@@ -5,7 +5,7 @@ module OSS
   class Process
     attr_reader :context, :template_identifier, :status, :operations
 
-    def initialize(template_identifier, context)
+    def initialize(template_identifier, context = nil)
       @template_identifier = template_identifier
       @context = context
       @status = 'NOT_STARTED'
