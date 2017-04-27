@@ -9,8 +9,8 @@ module OSS
 
     private
 
-    def possible_next_operations(process)
-      (process.template.operations - process.operations.map(&:template))
-    end
+    # def possible_next_operations(process)
+    #   (process.template.operations - process.operations.map(&:template))
+    # end
   end
 end

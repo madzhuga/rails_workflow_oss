@@ -15,12 +15,12 @@ module OSS
     end
 
     def run
-      run_next_operation until process.ready_operations.empty?
+      run_next_operations until process.ready_operations.empty?
 
       process.complete
     end
 
-    def run_next_operation
+    def run_next_operations
       process.ready_operations.map do |operation|
         operation.start
 
