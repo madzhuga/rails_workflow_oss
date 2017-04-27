@@ -9,6 +9,8 @@ module OSS
       template
     end
 
+    private
+
     def prepare_data(operation_data)
       operation_data.keys.each do |key|
         operation_data[key.to_s] = operation_data[key]
