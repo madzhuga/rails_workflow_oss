@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module OSS
-  # Builder is used to build new processes.
+  # Dependency Resolver is used to calculate which operations
+  # to create next in process
   class DependencyResolver
     attr_reader :process, :dependencies
 
@@ -13,7 +14,7 @@ module OSS
       possbile_next_operations.select do |pn|
         pn.dependencies.all? do |(template, statuses)|
           operation = process.operations.find { |o| o.template == template }
-          statuses.include?(operation.status)
+          operation && statuses.include?(operation.status)
         end
       end
     end

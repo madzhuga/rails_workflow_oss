@@ -30,19 +30,13 @@ module OSS
         operation.complete
       end
 
-      resolver.next_operations_templates.each do |template|
-        operation_builder.build(process, template)
-      end
+      builder.next_operations(process)
     end
 
     private
 
-    def resolver
-      @resolver ||= DependencyResolver.new(process)
-    end
-
-    def operation_builder
-      OSS.config.operation_builder
+    def builder
+      OSS.config.builder(self)
     end
   end
 end

@@ -11,11 +11,25 @@ module OSS
 
     def build(identifier, context)
       process = build_process(identifier, context)
-      build_independent_operations(process)
+      next_operations(process)
       process
     end
 
+    def next_operations(process)
+      resolver(process).next_operations_templates.each do |template|
+        operation_builder.build(process, template)
+      end
+    end
+
     private
+
+    def resolver(process)
+      @resolver ||= DependencyResolver.new(process)
+    end
+
+    def operation_builder
+      OSS.config.operation_builder
+    end
 
     def build_process(identifier, context)
       process_context = build_context(context)
@@ -36,19 +50,8 @@ module OSS
       end
     end
 
-    def build_independent_operations(process)
-      process_template(process.template_identifier)
-        .independent_operations.each do |operation_template|
-          operation_builder.build(process, operation_template)
-        end
-    end
-
     def process_template(identifier)
       OSS.config.process_template(identifier)
-    end
-
-    def operation_builder
-      @operation_builder ||= OperationBuilder.new
     end
   end
 end
