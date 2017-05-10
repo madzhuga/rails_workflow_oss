@@ -32,8 +32,21 @@ RSpec.describe OSS::Runner do
       expect { runner.start }
         .to change { process.completed_operations.count }.from(0).to(2)
     end
-    # specify { expect(process.status).to eq 'NOT_STARTED' }
-    # specify { expect(process.operations.count).to eq 1 }
-    # specify { expect(process.operations.first.status).to eq 'NOT_STARTED' }
+  end
+
+  context 'executes operation' do
+    let(:operation) { process.operations.first }
+
+    before do
+      allow(operation)
+        .to receive(:respond_to?)
+        .with(:execute, any_args)
+        .and_return(true)
+
+      allow(operation).to receive(:execute)
+      runner.start
+    end
+
+    it { expect(operation).to have_received(:execute) }
   end
 end
