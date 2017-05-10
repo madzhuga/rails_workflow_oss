@@ -7,7 +7,7 @@ module OSS
 
     def initialize(template_identifier, context = nil)
       @template_identifier = template_identifier
-      @context = context
+      @context = context || OSS::Context.new
       @status = 'NOT_STARTED'
       @operations = []
     end

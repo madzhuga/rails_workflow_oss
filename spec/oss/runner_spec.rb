@@ -49,4 +49,24 @@ RSpec.describe OSS::Runner do
 
     it { expect(operation).to have_received(:execute) }
   end
+
+  context 'context' do
+    let(:context) { OSS::Context.new(process_key: :process_value) }
+    let(:first_operation) { process.operations.first }
+
+    it { expect(process.context[:process_key]).to eq :process_value }
+    it { expect(first_operation.context[:process_key]).to eq :process_value }
+
+    describe 'operations context' do
+      before do
+        first_operation.context[:operation_key] = :operation_value
+        runner.start
+      end
+
+      let(:check_context) { process.operations[1].context }
+
+      it { expect(check_context[:operation_key]).to eq :operation_value }
+      it { expect(check_context[:process_key]).to eq :process_value }
+    end
+  end
 end

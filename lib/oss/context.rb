@@ -9,5 +9,13 @@ module OSS
     def initialize(hash = {})
       @data = hash
     end
+
+    def [](key)
+      data[key]
+    end
+
+    def []=(key, value)
+      data[key] = value
+    end
   end
 end
