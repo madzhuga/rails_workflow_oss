@@ -18,11 +18,22 @@ module OSS
     private
 
     def build_process(identifier, context)
+      process_context = build_context(context)
+
       # Technically we can get process template by identifier here
       # and it can be used to build process itself
       # but right now I don't have any specific logic
       # right now.
-      Process.new identifier, context
+      Process.new identifier, process_context
+    end
+
+    def build_context(context)
+      case context
+      when Hash
+        OSS::Context.new(context)
+      else
+        context
+      end
     end
 
     def build_independent_operations(process)

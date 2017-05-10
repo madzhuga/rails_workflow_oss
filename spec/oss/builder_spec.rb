@@ -19,5 +19,11 @@ RSpec.describe OSS::Builder do
     specify { expect(process.status).to eq 'NOT_STARTED' }
     specify { expect(process.operations.count).to eq 1 }
     specify { expect(process.operations.first.status).to eq 'not_started' }
+
+    context 'hash context' do
+      let(:context) { {} }
+
+      specify { expect(process.context).to be_a OSS::Context }
+    end
   end
 end

@@ -7,8 +7,6 @@ module OSS
     attr_reader :process
 
     def build(identifier, context)
-      # TODO: context can be both Hash or OSS::Context -
-      # build new Context from Hash
       @process = builder.build(identifier, context)
     end
 
