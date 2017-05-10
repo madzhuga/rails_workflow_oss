@@ -4,7 +4,7 @@ module OSS
   # Dependency Resolver is used to calculate which operations
   # to create next in process
   class DependencyResolver
-    attr_reader :process, :dependencies
+    attr_reader :process
 
     def initialize(process)
       @process = process
