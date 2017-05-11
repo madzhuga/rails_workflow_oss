@@ -34,20 +34,42 @@ RSpec.describe OSS::Runner do
     end
   end
 
-  context 'executes operation' do
+  context 'running operation' do
     let(:operation) { process.operations.first }
 
-    before do
-      allow(operation)
-        .to receive(:respond_to?)
-        .with(:execute, any_args)
-        .and_return(true)
+    context 'calls #execute' do
+      before do
+        allow(operation)
+          .to receive(:respond_to?)
+          .with(:execute, any_args)
+          .and_return(true)
 
-      allow(operation).to receive(:execute)
-      runner.start
+        allow(operation).to receive(:execute)
+        runner.start
+      end
+
+      it { expect(operation).to have_received(:execute) }
     end
 
-    it { expect(operation).to have_received(:execute) }
+    context 'raises error' do
+      before do
+        allow(operation)
+          .to receive(:respond_to?)
+          .with(:execute, any_args)
+          .and_return(true)
+
+        allow(operation).to receive(:execute).and_raise('some error')
+        runner.start
+      end
+
+      it { expect(process.operations.count).to eq 1 }
+      it { expect(process.errors.count).to eq 1 }
+      it { expect(process.status).to eq 'failed' }
+      it { expect(process).to be_failed }
+
+      it { expect(operation.errors.count).to eq 1 }
+      it { expect(operation.status).to eq 'failed' }
+    end
   end
 
   context 'context' do
