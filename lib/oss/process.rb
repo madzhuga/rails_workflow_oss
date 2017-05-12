@@ -23,7 +23,7 @@ module OSS
     end
 
     def completed_operations
-      @operations.select(&:complete?)
+      @operations.select(&:completed?)
     end
 
     def complete

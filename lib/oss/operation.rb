@@ -23,7 +23,7 @@ module OSS
       @status == 'not_started'
     end
 
-    def complete?
+    def completed?
       @status == 'completed'
     end
 
