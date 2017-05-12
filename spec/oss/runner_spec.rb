@@ -18,9 +18,8 @@ RSpec.describe OSS::Runner do
 
   context 'run process' do
     specify do
-      # TODO: replace statuses with downcase
       expect { runner.start }.to change { process.status }
-        .from('NOT_STARTED').to('COMPLETED')
+        .from('not_started').to('completed')
     end
 
     specify do

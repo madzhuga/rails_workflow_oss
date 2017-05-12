@@ -9,13 +9,12 @@ module OSS
     def initialize(template_identifier, context = nil)
       @template_identifier = template_identifier
       @context = context || OSS::Context.new
-      @status = 'NOT_STARTED'
+      @status = 'not_started'
       @operations = []
     end
 
     def start
-      # TODO: check that status is 'NOT_STARTED' else raise error
-      @status = 'IN_PROGRESS'
+      @status = 'in_progress'
     end
 
     def ready_operations
@@ -28,7 +27,7 @@ module OSS
 
     def complete
       return if @status == 'failed'
-      @status = 'COMPLETED'
+      @status = 'completed'
     end
 
     def fail

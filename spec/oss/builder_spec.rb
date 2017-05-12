@@ -16,7 +16,7 @@ RSpec.describe OSS::Builder do
 
     subject(:process) { described_class.new.build(identifier, context) }
 
-    specify { expect(process.status).to eq 'NOT_STARTED' }
+    specify { expect(process.status).to eq 'not_started' }
     specify { expect(process.operations.count).to eq 1 }
     specify { expect(process.operations.first.status).to eq 'not_started' }
 
