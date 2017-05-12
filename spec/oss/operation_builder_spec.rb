@@ -11,6 +11,13 @@ RSpec.describe OSS::OperationBuilder do
   end
 
   describe '#build' do
+    let(:template_data) do
+      {
+        'identifier': 'operation_one',
+        'operation_class': 'TestOperation'
+      }
+    end
+
     context 'template with no operation class specified' do
       let(:template_data) do
         { 'identifier': 'operation_one' }
@@ -20,18 +27,23 @@ RSpec.describe OSS::OperationBuilder do
     end
 
     context 'template with operation class specified' do
-      let(:template_data) do
-        {
-          'identifier': 'operation_one',
-          'operation_class': 'TestOperation'
-        }
-      end
-
       before do
         stub_const('TestOperation', Class.new(OSS::Operation))
       end
 
       it { expect(new_operation).to be_a TestOperation }
+    end
+
+    context 'operation class conditions are not satisfied' do
+      before do
+        stub_const('TestOperation', Class.new(OSS::Operation) do
+          def self.satisfy?(_args)
+            false
+          end
+        end)
+      end
+
+      it { expect(new_operation).to be_nil }
     end
   end
 end

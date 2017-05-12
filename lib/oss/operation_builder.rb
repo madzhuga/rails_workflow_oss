@@ -3,16 +3,22 @@
 module OSS
   # Builder is used to build new processes.
   class OperationBuilder
-    attr_reader :process, :template
+    attr_reader :process, :template, :context
 
     def build(process, template)
       @process = process
       @template = template
 
-      operation_class.new(process, template, context: build_context)
+      args = [process, template, context: context]
+
+      operation_class.new(*args) if operation_class.satisfy?(args)
     end
 
     private
+
+    def context
+      @build_context ||= build_context
+    end
 
     def operation_class
       # TODO: Move Operation to OSS.config.default_operation_class

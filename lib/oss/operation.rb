@@ -6,6 +6,13 @@ module OSS
     attr_reader :template, :process, :status, :context
     attr_accessor :errors
 
+    # This method allows to add additional conditions.
+    # If returns true - operation will be created, otherwize - will not.
+    # @args - array including process, operation template and operation contexts
+    def self.satisfy?(_args)
+      true
+    end
+
     def initialize(process, operation_template, context: Context.new)
       @process = process
       @template = operation_template
