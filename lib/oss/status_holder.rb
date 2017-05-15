@@ -6,6 +6,7 @@ module OSS
   module StatusHolder
     def status=(new_status)
       @status = new_status
+      # binding.pry if new_status == 'in_progress'
       status_changed
     end
 

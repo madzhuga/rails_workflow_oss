@@ -21,8 +21,16 @@ module OSS
       self.status = 'in_progress'
     end
 
+    def in_progress?
+      status == 'in_progress'
+    end
+
     def ready_operations
       @operations.select(&:ready?)
+    end
+
+    def not_started?
+      status == 'not_started'
     end
 
     def completed_operations
@@ -32,6 +40,10 @@ module OSS
     def complete
       return if status == 'failed'
       self.status = 'completed'
+    end
+
+    def completed?
+      status == 'completed'
     end
 
     def fail

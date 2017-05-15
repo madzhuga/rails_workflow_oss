@@ -10,6 +10,9 @@ module OSS
     attr_reader :template, :process, :status, :context
     attr_accessor :errors
 
+    # TODO: do we need to delegate operation.identifier
+    # to operation.template.identifier?
+
     # This method allows to add additional conditions.
     # If returns true - operation will be created, otherwize - will not.
     # @args - array including process, operation template and operation contexts
@@ -28,6 +31,14 @@ module OSS
 
     def start
       self.status = 'in_progress'
+    end
+
+    def in_progress?
+      status == 'in_progress'
+    end
+
+    def not_started?
+      status == 'not_started'
     end
 
     def ready?

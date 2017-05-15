@@ -9,7 +9,17 @@ RSpec.describe OSS::Runner do
       config.processes_path = './spec/support/sample_process'
     end
 
-    allow(persistence_manager).to receive(:save).with(any_args)
+    stub_const('OSS::PersistenceManager', Class.new(OSS::PersistenceManager) do
+      attr_reader :cache
+
+      def initialize
+        @cache = []
+      end
+
+      def save(object)
+        cache.push([object.template.identifier, object.status])
+      end
+    end)
   end
 
   subject(:runner) { described_class.new(process) }
@@ -36,12 +46,30 @@ RSpec.describe OSS::Runner do
         .to change { process.completed_operations.count }.from(0).to(2)
     end
 
-    it 'saves process' do
-      expect(persistence_manager).to have_received(:save).with(process)
-    end
+    context 'persistence' do
+      before do
+        runner.start
+      end
 
-    it 'saves operation' do
-      expect(persistence_manager).to have_received(:save).with(operation)
+      it 'saves started process' do
+        expect(persistence_manager.cache)
+          .to include %w[some_dummy_identifier in_progress]
+      end
+
+      it 'saves completed process' do
+        expect(persistence_manager.cache)
+          .to include %w[some_dummy_identifier completed]
+      end
+
+      it 'saves started operation' do
+        expect(persistence_manager.cache)
+          .to include %w[operation_one in_progress]
+      end
+
+      it 'saves completed operation' do
+        expect(persistence_manager.cache)
+          .to include %w[operation_one completed]
+      end
     end
   end
 
@@ -78,6 +106,16 @@ RSpec.describe OSS::Runner do
 
       it { expect(operation.errors.count).to eq 1 }
       it { expect(operation.status).to eq 'failed' }
+
+      it 'saves failed process' do
+        expect(persistence_manager.cache)
+          .to include %w[some_dummy_identifier failed]
+      end
+
+      it 'saves failed operation' do
+        expect(persistence_manager.cache)
+          .to include %w[operation_one failed]
+      end
     end
   end
 
