@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require_relative './status_holder.rb'
+
 module OSS
   # Operation
   class Operation
+    include StatusHolder
+
     attr_reader :template, :process, :status, :context
     attr_accessor :errors
 
@@ -16,22 +20,22 @@ module OSS
     def initialize(process, operation_template, context: Context.new)
       @process = process
       @template = operation_template
-      @status = 'not_started'
+      self.status = 'not_started'
       @context = context
 
       @process.operations.push(self)
     end
 
     def start
-      @status = 'in_progress'
+      self.status = 'in_progress'
     end
 
     def ready?
-      @status == 'not_started'
+      status == 'not_started'
     end
 
     def completed?
-      @status == 'completed'
+      status == 'completed'
     end
 
     def errors
@@ -39,16 +43,16 @@ module OSS
     end
 
     def complete
-      @status = 'completed'
+      self.status = 'completed'
     end
 
     def fail
-      @status = 'failed'
+      self.status = 'failed'
       process.fail
     end
 
     def failed?
-      @status == 'failed'
+      status == 'failed'
     end
   end
 end
