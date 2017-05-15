@@ -8,6 +8,8 @@ RSpec.describe OSS::Runner do
       config.loader_class = OSS::Loader::Json
       config.processes_path = './spec/support/sample_process'
     end
+
+    allow(persistence_manager).to receive(:save).with(any_args)
   end
 
   subject(:runner) { described_class.new(process) }
@@ -15,6 +17,8 @@ RSpec.describe OSS::Runner do
   let(:identifier) { 'some_dummy_identifier' }
   let(:context) { OSS::Context.new }
   let(:process) { OSS::Builder.new.build(identifier, context) }
+  let(:operation) { process.operations.first }
+  let(:persistence_manager) { OSS.config.persistence_manager }
 
   context 'run process' do
     specify do
@@ -31,11 +35,17 @@ RSpec.describe OSS::Runner do
       expect { runner.start }
         .to change { process.completed_operations.count }.from(0).to(2)
     end
+
+    it 'saves process' do
+      expect(persistence_manager).to have_received(:save).with(process)
+    end
+
+    it 'saves operation' do
+      expect(persistence_manager).to have_received(:save).with(operation)
+    end
   end
 
   context 'running operation' do
-    let(:operation) { process.operations.first }
-
     context 'calls #execute' do
       before do
         allow(operation)

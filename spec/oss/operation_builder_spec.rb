@@ -10,6 +10,22 @@ RSpec.describe OSS::OperationBuilder do
     OSS::OperationTemplateBuilder.new.build(process_template, template_data)
   end
 
+  context 'operation persistence' do
+    let(:template_data) do
+      { 'identifier': 'operation_one' }
+    end
+
+    let(:persistence_manager) { OSS.config.persistence_manager }
+
+    before do
+      allow(persistence_manager).to receive(:save).with(any_args)
+    end
+
+    it 'saves new operation' do
+      expect(persistence_manager).to have_received(:save).with(new_operation)
+    end
+  end
+
   describe '#build' do
     let(:template_data) do
       {

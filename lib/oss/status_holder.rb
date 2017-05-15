@@ -12,7 +12,11 @@ module OSS
     private
 
     def status_changed
-      # TODO: Notify PersistanceManager
+      persistence_manager.save(self)
+    end
+
+    def persistence_manager
+      OSS.config.persistence_manager
     end
   end
 end

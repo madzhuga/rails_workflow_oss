@@ -60,5 +60,9 @@ module OSS
     def cache
       @cache ||= Cache.new
     end
+
+    def persistence_manager
+      @persistence_manager ||= PersistenceManager.new
+    end
   end
 end
