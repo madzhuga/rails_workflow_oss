@@ -22,7 +22,6 @@ module OSS
     def run_next_operations
       return if process.ready_operations.empty?
       process.ready_operations.map do |operation|
-        operation.start
         try_execute operation
       end
 
@@ -35,6 +34,7 @@ module OSS
     private
 
     def try_execute(operation)
+      operation.start
       operation.execute if operation.respond_to? :execute
       operation.complete
     rescue StandardError => e

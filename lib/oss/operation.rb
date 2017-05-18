@@ -7,7 +7,7 @@ module OSS
   class Operation
     include StatusHolder
 
-    attr_reader :template, :process, :status, :context
+    attr_reader :template, :process, :context
     attr_accessor :errors
 
     # TODO: do we need to delegate operation.identifier
@@ -29,41 +29,8 @@ module OSS
       @process.operations.push(self)
     end
 
-    def start
-      self.status = 'in_progress'
-    end
-
-    def in_progress?
-      status == 'in_progress'
-    end
-
-    def not_started?
-      status == 'not_started'
-    end
-
-    def ready?
-      status == 'not_started'
-    end
-
-    def completed?
-      status == 'completed'
-    end
-
     def errors
       @errors ||= []
-    end
-
-    def complete
-      self.status = 'completed'
-    end
-
-    def fail
-      self.status = 'failed'
-      process.fail
-    end
-
-    def failed?
-      status == 'failed'
     end
   end
 end
